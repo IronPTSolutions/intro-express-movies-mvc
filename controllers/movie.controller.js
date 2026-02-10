@@ -14,9 +14,7 @@ export async function list (req, res) {
 export async function detail(req, res) {
     const movie = await Movie.findById(req.params.id);
 
-    if (!movie) {
-        return res.status(404).json({ error: "movie not found" });
-    }
+    if (!movie) return res.status(404).json({ error: "movie not found" });
 
     res.json(movie);
 }
@@ -24,9 +22,7 @@ export async function detail(req, res) {
 export async function update (req, res) {
     const movie = await Movie.findByIdAndUpdate(req.params.id, req.body);
     
-    if (!movie) {
-    return res.status(404).json({ error: "movie not found" });
-    }
+    if (!movie) return res.status(404).json({ error: "movie not found" });
 
     res.json(movie);
 }
@@ -34,9 +30,7 @@ export async function update (req, res) {
 export async function remove (req, res) {
     const movie = await Movie.findById(req.params.id);
     
-    if (!movie) {
-    return res.status(404).json({ error: "movie not found" });
-    }
+    if (!movie) return res.status(404).json({ error: "movie not found" });
 
     await Movie.findByIdAndDelete(req.params.id);
     res.status(204).send();
