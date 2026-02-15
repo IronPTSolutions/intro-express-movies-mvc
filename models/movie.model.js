@@ -33,6 +33,12 @@ const movieSchema = new Schema(
   },
 );
 
+movieSchema.virtual("ratings", {
+  ref: "Rating",        // Modelo de donde vienen los datos
+  localField: "_id",    // Campo local (Movie._id)
+  foreignField: "movie", // Campo en Rating que apunta a Movie
+});
+
 const Movie = model("Movie", movieSchema);
 
 export default Movie;
