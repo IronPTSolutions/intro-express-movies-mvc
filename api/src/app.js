@@ -1,10 +1,15 @@
-import 'dotenv/config';
-import express from 'express';
-import pinoHttp from 'pino-http';
-import { logger } from './lib/logger.js';
-import './lib/db.js';
-import router from './controllers/index.js';
-import { errors } from './middlewares/index.js';
+import "dotenv/config";
+import express from "express";
+import pinoHttp from "pino-http";
+import { logger } from "./lib/logger.js";
+import "./lib/db.js";
+import router from "./controllers/index.js";
+import { errors } from "./middlewares/index.js";
+
+import dns from "node:dns";
+
+dns.setServers(["8.8.8.8", "1.1.1.1"]);
+dns.setDefaultResultOrder("ipv4first");
 
 const app = express();
 
@@ -16,7 +21,7 @@ app.use(router);
 app.use(errors.notFound);
 app.use(errors.globalHandler);
 
-if (process.env.NODE_ENV !== 'test') {
+if (process.env.NODE_ENV !== "test") {
   const PORT = process.env.PORT ?? 3000;
   app.listen(PORT, () => logger.info(`Server running on port ${PORT}`));
 }
